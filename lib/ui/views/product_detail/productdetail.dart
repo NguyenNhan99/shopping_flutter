@@ -48,50 +48,51 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
-        body: DefaultTabController(
-          length: 2,
-          child: StreamBuilder(
-              stream: _productDetailBloc.productDetail.stream,
-              builder: (context, AsyncSnapshot<ProductDetailModel> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.active:
-                  case ConnectionState.done:
-                    if (snapshot.hasData)
-                      return NestedScrollView(
-                        headerSliverBuilder:
-                            (BuildContext context, bool innerBoxIsScrolled) {
-                          return <Widget>[
-                            SliverAppBar(
-                              backgroundColor: Colors.grey.withOpacity(0.2),
-                              actions: [
-                                IconButton(
-                                  icon: Icon(Icons.shopping_cart_outlined),
-                                  onPressed: () {},
-                                ),
-                              ],
-                              expandedHeight: 250.0,
-                              floating: false,
-                              pinned: true,
-                              flexibleSpace: FlexibleSpaceBar(
-                                  background: Swiper(
-                                itemCount: snapshot.data.data.imagesUrl.length,
-                                itemBuilder:
-                                    (BuildContext context, int index) =>
-                                        Image.network(
-                                  '$url${snapshot.data.data.imagesUrl[index]}',
-                                  fit: BoxFit.fill,
-                                ),
-                                onIndexChanged: (index) {
-                                  setState(() {
-                                    _current = index;
-                                  });
-                                },
-                              )),
-                            ),
-                          ];
-                        },
-                        body: Column(
+        body: StreamBuilder(
+            stream: _productDetailBloc.productDetail.stream,
+            builder: (context, AsyncSnapshot<ProductDetailModel> snapshot) {
+              switch (snapshot.connectionState) {
+                case ConnectionState.active:
+                case ConnectionState.done:
+                  if (snapshot.hasData)
+                    return NestedScrollView(
+
+                      headerSliverBuilder:
+                          (BuildContext context, bool innerBoxIsScrolled) {
+                        return <Widget>[
+                          SliverAppBar(
+                            backgroundColor: Colors.grey.withOpacity(0.2),
+                            actions: [
+                              IconButton(
+                                icon: Icon(Icons.shopping_cart_outlined),
+                                onPressed: () {},
+                              ),
+                            ],
+                            expandedHeight: 250.0,
+                            floating: false,
+                            pinned: true,
+                            flexibleSpace: FlexibleSpaceBar(
+                                background: Swiper(
+                              itemCount: snapshot.data.data.imagesUrl.length,
+                              itemBuilder:
+                                  (BuildContext context, int index) =>
+                                      Image.network(
+                                '$url${snapshot.data.data.imagesUrl[index]}',
+                                fit: BoxFit.fill,
+                              ),
+                              onIndexChanged: (index) {
+                                setState(() {
+                                  _current = index;
+                                });
+                              },
+                            )),
+                          ),
+                        ];
+                      },
+                      body: SingleChildScrollView(
+                        child: Column(
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -106,7 +107,7 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                                     border: Border.all(
                                         color: Colors.white, width: 1),
                                     shape: BoxShape.circle,
-                                    color: _current == index
+                                    color:_current != index
                                         ? Color(0xFF3366FF)
                                         : Colors.grey,
                                   ),
@@ -276,26 +277,152 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                               width: Get.width,
                               color: Colors.grey.withOpacity(0.2),
                             ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8,right: 8, bottom: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Thông tin sản phẩm',
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_right,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8,right: 8, bottom: 0),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Tài liệu kỉ thuật',
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_right,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            const Divider(),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8,right: 8, bottom: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Phụ kiện kèm theo',
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.black),
+                                  ),
+                                  Icon(
+                                    Icons.arrow_right,
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Container(
+                              height: 10,
+                              width: Get.width,
+                              color: Colors.grey.withOpacity(0.2),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 8, top: 8,right: 8, bottom: 8),
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Đánh giá',
+                                    style:
+                                    TextStyle(fontSize: 15, color: Colors.grey),
+                                  ),
+                                  Container(
+                                    height: 50,
+                                    decoration: BoxDecoration(
+                                      color: Colors.grey.withOpacity(0.5),
+                                      borderRadius:BorderRadius.all(
+                                          Radius.circular(8.0) //                 <--- border radius here
+                                      )
+                                    ),
+                                    child: Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Center(child: Text('Đánh giá ngay',style: TextStyle(color: Colors.white),)),
+                                    ),
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Text('Chọn mua sản phẩn để là người đầu tiên đánh giá sản phẩm này'),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    'Sản phẩm liên quan',
+                                    style: TextStyle(
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20),
+                                  ),
+
+                                ],
+                              ),
+                            ),
                           ],
                         ),
-                      );
-                    else
-                      return Container();
-                    break;
-                  default:
-                    return Container();
-                }
-              }),
-        ),
-        bottomNavigationBar: Padding(
-          padding: EdgeInsets.all(8.0),
-          child: RaisedButton(
-            onPressed: () {},
-            color: Colors.blue,
-            textColor: Colors.white,
-            child: Text('Fixed Button'),
+                      ),
+                    );
+                  else
+                    return Center(child: Text('Không có sản phẩm này'));
+                  break;
+                default:
+                  return Container();
+              }
+            }),
+        bottomNavigationBar:Container(
+          height: 50,
+          color: Colors.grey.withOpacity(0.2),
+          child: Row(
+            children: [
+              Spacer(),
+              Column(
+                children: [
+                  Icon(Icons.message),
+                  Text('Chat ngay')
+                ],
+              ),
+              Spacer(),
+              VerticalDivider(),
+              Column(
+                children: [
+                  Icon(Icons.shopping_cart),
+                  Text('Thêm vào giỏ hàng')
+                ],
+              ),
+              Spacer(),
+              Container(
+                decoration: BoxDecoration(
+                    color: Colors.deepOrange,
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Center(child: Text('Đánh giá ngay',style: TextStyle(color: Colors.white),)),
+                ),
+              )
+            ],
           ),
-        ));
+        )
+);
   }
 
   SizedBox CustomButton({IconData icon, Function press}) {
