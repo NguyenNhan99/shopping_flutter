@@ -291,7 +291,9 @@ class _HomePageUIState extends State<HomePageUI> {
                         return Container();
                       break;
                     default:
-                      return Container();
+                      return const Center(
+                        child: CircularProgressIndicator(),
+                      );
                   }
 
                 }

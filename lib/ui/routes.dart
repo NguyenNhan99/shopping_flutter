@@ -5,6 +5,8 @@ import 'package:code_demo/ui/views/home/homepage.dart';
 import 'package:code_demo/ui/views/loading/loading.dart';
 import 'package:code_demo/ui/views/product_detail/productdetail.dart';
 import 'package:code_demo/ui/views/product_detail/productdetailbloc.dart';
+import 'package:code_demo/ui/views/productlist/productlist.dart';
+import 'package:code_demo/ui/views/productlist/productlistbloc.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import 'bottombar.dart';
@@ -20,7 +22,10 @@ class RouterManager {
       GetPage(name: DetailUI.ROUTER_NAME, page: () => const DetailUI()),
       GetPage(
           name: ProductDetailUI.ROUTER_NAME,
-          page: () => BlocProvider(bloc: ProductDetailBloc(), child: ProductDetailUI()))
+          page: () => BlocProvider(bloc: ProductDetailBloc(), child: ProductDetailUI())),
+      GetPage(
+          name: ProductListUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: ProductListBloc(), child: ProductListUI()))
 
     ];
 

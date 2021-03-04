@@ -93,6 +93,7 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                       },
                       body: SingleChildScrollView(
                         child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Row(
                               mainAxisAlignment: MainAxisAlignment.center,
@@ -265,7 +266,7 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                                   CustomButton(
                                       icon: Icons.add,
                                       press: () {
-                                        setState(() {
+                                          setState(() {
                                           numItems++;
                                         });
                                       }),
@@ -378,6 +379,91 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                                 ],
                               ),
                             ),
+                            SizedBox(
+                              height: Get.height *0.4,
+                              child: ListView.builder(
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: snapshot.data.data.relatedProducts.length,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    return Padding(
+                                      padding: const EdgeInsets.all(8.0),
+                                      child: Container(
+                                        width: Get.width *0.6,
+                                          decoration: BoxDecoration(
+                                            color: Colors.white,
+                                            borderRadius: BorderRadius.circular(10),
+                                            boxShadow: [
+                                              BoxShadow(
+                                                  color: Colors.grey,
+                                                  offset: Offset(0, -1),
+                                                  blurRadius: 10)
+                                            ],
+                                          ),
+                                        child: Column(
+                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                          children: [
+                                            (snapshot.data.data.relatedProducts[index].isPromotion != 0)?Row(
+                                              children: [Padding(
+                                                padding: const EdgeInsets.only(
+                                                    top: 8, right: 8, left: 8),
+                                                child: Container(
+                                                  height: 30,
+                                                  width: 50,
+                                                  decoration: BoxDecoration(
+                                                    color:Colors.redAccent,
+                                                    borderRadius: BorderRadius.circular(10),
+                                                  ),
+                                                  child: Center(
+                                                    child: Text(
+                                                      "${snapshot.data.data.relatedProducts[index].isPromotion}%",
+                                                      style: TextStyle(
+                                                          color: Colors.white,
+                                                          fontWeight: FontWeight.bold,
+                                                          fontSize: 16),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+
+                                              ],
+                                            ):const SizedBox.shrink(),
+                                            SizedBox(height: 5,),
+                                            Image.network('$url${snapshot.data.data.relatedProducts[index].image}',
+                                              height: Get.height * 0.2,
+                                              width: Get.width * 0.6,
+                                              fit: BoxFit.fill,
+                                            ),
+                                            Divider(),
+
+                                            Padding(
+                                              padding: const EdgeInsets.all(8.0),
+                                              child: Text(
+                                                "${snapshot.data.data.relatedProducts[index].name}",maxLines: 2,
+                                                style: TextStyle(
+                                                  color: Colors.grey,
+                                                  fontSize: 16,
+                                                  fontWeight: FontWeight.bold,
+                                                ),
+                                              ),
+                                            ),
+                                            Padding(
+                                              padding: const EdgeInsets.only(left: 8),
+                                              child: Text(
+                                                "${NumberFormat('#,###', "vi_VN").format(snapshot.data.data.relatedProducts[index].price)}đ",
+                                                style: TextStyle(
+                                                  color: Colors.redAccent,
+                                                  fontSize: 18,
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    );
+                                  }),
+                            )
+
+
                           ],
                         ),
                       ),
@@ -410,13 +496,20 @@ class _ProductDetailUIState extends State<ProductDetailUI> {
                 ],
               ),
               Spacer(),
-              Container(
-                decoration: BoxDecoration(
-                    color: Colors.deepOrange,
-                ),
-                child: Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Center(child: Text('Đánh giá ngay',style: TextStyle(color: Colors.white),)),
+              GestureDetector(
+                behavior: HitTestBehavior.translucent,
+                onTap: (){
+                  print(numItems);
+                },
+                child: Container(
+                  width: Get.width * 0.4,
+                  decoration: BoxDecoration(
+                      color: Colors.deepOrange,
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Center(child: Text('Mua ngay',style: TextStyle(color: Colors.white),)),
+                  ),
                 ),
               )
             ],
