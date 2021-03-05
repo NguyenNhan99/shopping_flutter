@@ -3,7 +3,7 @@ import 'package:code_demo/core/config/local_variable.dart';
 import 'package:code_demo/core/models/homemodel.dart';
 import 'package:code_demo/core/models/productlistmodel.dart';
 import 'package:code_demo/ui/views/product_detail/productdetail.dart';
-import 'package:code_demo/ui/views/productlist/productlistbloc.dart';
+import 'package:code_demo/ui/views/product_list/productlistbloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -190,77 +190,6 @@ class _ProductListUIState extends State<ProductListUI> {
             ],
           ),
           Divider(),
-          // Container(
-          //   height: Get.height * 0.3,
-          //   width: Get.width * 0.5,
-          //   decoration: BoxDecoration(
-          //     color: Colors.white,
-          //     borderRadius: BorderRadius.circular(10),
-          //     boxShadow: [
-          //       BoxShadow(
-          //           color: Colors.grey,
-          //           offset: Offset(0, -1),
-          //           blurRadius: 10)
-          //     ],
-          //   ),
-          //   child: Column(
-          //     crossAxisAlignment: CrossAxisAlignment.start,
-          //     children: [
-          //       Container(
-          //         height: 20,
-          //         width: 70,
-          //         decoration:BoxDecoration(
-          //           color: Colors.red,
-          //           borderRadius: BorderRadius.only( bottomRight: Radius.circular(40)
-          //           ),
-          //         ), //             <--- BoxDecoration here
-          //         child: Center(
-          //           child: Text(
-          //             "7%",
-          //             style: TextStyle(fontSize: 15.0,color: Colors.white),
-          //           ),
-          //         ),
-          //       ),
-          //           Image.network(
-          //             'https://trongnv.me/uploads/images/category/w480/1-he-thong-bao-dong-2-XxWZM.jpg',
-          //             width: Get.width * 0.45,
-          //           ),
-          //       Padding(
-          //         padding: const EdgeInsets.all(8.0),
-          //         child: Text(
-          //           "abv",maxLines: 2,
-          //           style: TextStyle(
-          //             color: Colors.grey,
-          //             fontSize: 16,
-          //             fontWeight: FontWeight.bold,
-          //           ),
-          //         ),
-          //       ),
-          //       Padding(
-          //         padding: const EdgeInsets.only(left: 8),
-          //         child: Text(
-          //           "${NumberFormat('#,###', "vi_VN").format(1250000)}đ",
-          //           style: TextStyle(
-          //             color: Colors.redAccent,
-          //             fontSize: 18,
-          //           ),
-          //         ),
-          //       ),
-          //
-          //       // Stack(
-          //       //   children: [
-          //       //     Image.network(
-          //       //       'https://trongnv.me/uploads/images/category/w480/1-he-thong-bao-dong-2-XxWZM.jpg',
-          //       //       width: Get.width * 0.5,
-          //       //     ),
-          //       //     SizedBox(
-          //       //       height: 5,
-          //       //     ),
-          //       //   ],
-          //       // ),
-          //     ],
-          //   ),
-          // ),
           Expanded(
             child: StreamBuilder(
               stream: _productListBloc.productList.stream,
@@ -426,12 +355,12 @@ class _ProductListUIState extends State<ProductListUI> {
                   ),
                 ),
                 Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.back(result: 'Giá giảm dần');
-                    },
+                GestureDetector(
+                  onTap: (){
+                    Get.back(result: 'Giá giảm dần');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -448,12 +377,12 @@ class _ProductListUIState extends State<ProductListUI> {
                   ),
                 ),
                 const Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.back(result: 'Giá tăng dần');
-                    },
+                GestureDetector(
+                  onTap: (){
+                    Get.back(result: 'Giá tăng dần');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
@@ -470,12 +399,12 @@ class _ProductListUIState extends State<ProductListUI> {
                   ),
                 ),
                 const Divider(),
-                Padding(
-                  padding: const EdgeInsets.all(10),
-                  child: GestureDetector(
-                    onTap: () {
-                      Get.back(result: 'Sản phẩm mới');
-                    },
+                GestureDetector(
+                  onTap: (){
+                    Get.back(result: 'Sản phẩm mới');
+                  },
+                  child: Padding(
+                    padding: const EdgeInsets.all(10),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [

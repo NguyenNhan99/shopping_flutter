@@ -1,6 +1,8 @@
 import 'package:code_demo/core/config/base_bloc.dart';
 import 'package:code_demo/ui/views/home/homebloc.dart';
 import 'package:code_demo/ui/views/home/homepage.dart';
+import 'package:code_demo/ui/views/main_profile/mainprofile.dart';
+import 'package:code_demo/ui/views/main_profile/mainprofilebloc.dart';
 import 'package:ff_navigation_bar/ff_navigation_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -33,10 +35,10 @@ class _BottomBarState extends State<BottomBar> {
         // );
         break;
       case 2:
-        // return BlocProvider(
-        //   bloc: DanhBaBloc(),
-        //   child: DanhBaUI(),
-        // );
+        return BlocProvider(
+          bloc: MainProfileBloc(),
+          child: MainProfileUI(),
+        );
         break;
       default:
         return Container(
@@ -100,29 +102,6 @@ class _BottomBarState extends State<BottomBar> {
 
           ],
         ),
-
-        // home viworks
-        // CurvedNavigationBar(
-        //   index: pageIndex,
-        //   height: 60.0,
-        //   items: <Widget>[
-        //     const Icon(Icons.message, size: 30, color: LightColors.icons),
-        //     const Icon(Icons.home, size: 30, color: LightColors.icons),
-        //     const Icon(Icons.collections_bookmark, size: 30, color: LightColors.icons)
-        //   ],
-        //   color: LightColors.accentsColor,
-        //   buttonBackgroundColor: const Color(0xff329d9c),
-        //   backgroundColor: Colors.transparent,
-        //   animationCurve: Curves.easeInOut,
-        //   animationDuration: const Duration(milliseconds: 400),
-        //   onTap: (int tappedIndex) {
-        //     if (tappedIndex == pageIndex) return;
-        //     pageIndex = tappedIndex;
-        //     setState(() {
-        //       _currentPage = _pageChoosed(tappedIndex);
-        //     });
-        //   },
-        // ),
         );
   }
 }

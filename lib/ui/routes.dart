@@ -1,12 +1,21 @@
 import 'package:code_demo/core/config/base_bloc.dart';
+import 'package:code_demo/ui/views/checkout_success/checkoutsuccess.dart';
 import 'package:code_demo/ui/views/detail/detailui.dart';
 import 'package:code_demo/ui/views/home/homebloc.dart';
 import 'package:code_demo/ui/views/home/homepage.dart';
 import 'package:code_demo/ui/views/loading/loading.dart';
+import 'package:code_demo/ui/views/main_profile/mainprofile.dart';
+import 'package:code_demo/ui/views/main_profile/mainprofilebloc.dart';
+import 'package:code_demo/ui/views/order_detail/orderdetail.dart';
+import 'package:code_demo/ui/views/order_detail/orderdetailbloc.dart';
+import 'package:code_demo/ui/views/order_list/orderlist.dart';
+import 'package:code_demo/ui/views/order_list/orderlistbloc.dart';
 import 'package:code_demo/ui/views/product_detail/productdetail.dart';
 import 'package:code_demo/ui/views/product_detail/productdetailbloc.dart';
-import 'package:code_demo/ui/views/productlist/productlist.dart';
-import 'package:code_demo/ui/views/productlist/productlistbloc.dart';
+import 'package:code_demo/ui/views/product_list/productlist.dart';
+import 'package:code_demo/ui/views/product_list/productlistbloc.dart';
+import 'package:code_demo/ui/views/wish_list/wishlist.dart';
+import 'package:code_demo/ui/views/wish_list/wishlistbloc.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
 
 import 'bottombar.dart';
@@ -25,7 +34,20 @@ class RouterManager {
           page: () => BlocProvider(bloc: ProductDetailBloc(), child: ProductDetailUI())),
       GetPage(
           name: ProductListUI.ROUTER_NAME,
-          page: () => BlocProvider(bloc: ProductListBloc(), child: ProductListUI()))
+          page: () => BlocProvider(bloc: ProductListBloc(), child: ProductListUI())),
+      GetPage(name: CheckOutSuccessUI.ROUTER_NAME, page: () => const CheckOutSuccessUI()),
+      GetPage(
+          name: MainProfileUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: MainProfileBloc(), child: MainProfileUI())),
+      GetPage(
+          name: WishListUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: WishListBloc(), child: WishListUI())),
+      GetPage(
+          name: OrderListUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: OrderListBloc(), child: OrderListUI())),
+      GetPage(
+          name: OrderDetailUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: OrderDetailBloc(), child: OrderDetailUI())),
 
     ];
 

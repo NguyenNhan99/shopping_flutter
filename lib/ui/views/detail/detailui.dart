@@ -1,7 +1,6 @@
 import 'package:code_demo/core/config/local_variable.dart';
 import 'package:code_demo/core/models/homemodel.dart';
-import 'package:code_demo/ui/views/product_detail/productdetail.dart';
-import 'package:code_demo/ui/views/productlist/productlist.dart';
+import 'package:code_demo/ui/views/product_list/productlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

@@ -8,6 +8,7 @@ import 'package:dio_http_cache/dio_http_cache.dart';
 
 class HttpRequest {
   static final HttpRequest instance = HttpRequest._();
+  String token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJVc2VySWQiOjI3LCJSb2xlIjoxLCJleHAiOjE3NjA0OTE5NTl9.h1dIuSgmoqgZDVhIcEvLHc4o1FEhcfFx90Fwa410ATo';
   final int _timeOut = 30000; //30 s
   Dio _dio;
   DioCacheManager _dioCacheManager;
@@ -28,6 +29,8 @@ class HttpRequest {
         baseUrl: LocalVariable.instance.urlAPI,
         contentType: ContentType.json.value,
         responseType: ResponseType.plain);
+    final String auth = 'Bearer ' + token ;
+    options.headers.addAll(<String, String>{'authorization': auth});
     _dio = Dio(options);
     _dio.interceptors.add(dioCacheManager.interceptor);
   }
@@ -36,7 +39,6 @@ class HttpRequest {
     try {
       _options = buildCacheOptions(const Duration(days: 7),
           maxStale: const Duration(days: 10));
-      if (headers != null) _options.headers.addAll(headers);
       final Response response = await _dio.get(url, options: _options);
       if (response.statusCode == 200) {
         return response.data;
@@ -57,6 +59,7 @@ class HttpRequest {
       final String jso = jsonEncode(param);
       final Response response =
       await _dio.post(url, data: jso, options: _options);
+      // await _dio.post(url, data: {"product_id": 10, "quantity": 1});
       if (response.statusCode == 200) {
         return response.data;
       } else {
