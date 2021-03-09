@@ -28,13 +28,13 @@ class _BottomBarState extends State<BottomBar> {
           child: HomePageUI(),
         );
         break;
+      // case 1:
+      //   // return BlocProvider(
+      //   //   bloc: HomeBloc(),
+      //   //   child: HomePageUI(),
+      //   // );
+      //   break;
       case 1:
-        // return BlocProvider(
-        //   bloc: HomeBloc(),
-        //   child: HomePageUI(),
-        // );
-        break;
-      case 2:
         return BlocProvider(
           bloc: MainProfileBloc(),
           child: MainProfileUI(),
@@ -88,11 +88,11 @@ class _BottomBarState extends State<BottomBar> {
               label: 'Trang chủ',
             ),
 
-            FFNavigationBarItem(
-              iconData: Icons.shopping_cart_outlined,
-              itemWidth: 80,
-              label: 'Giỏ hàng',
-            ),
+            // FFNavigationBarItem(
+            //   iconData: Icons.shopping_cart_outlined,
+            //   itemWidth: 80,
+            //   label: 'Giỏ hàng',
+            // ),
 
             FFNavigationBarItem(
               iconData: Icons.perm_contact_cal,

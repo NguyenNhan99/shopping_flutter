@@ -72,6 +72,28 @@ class HttpRequest {
     }
   }
 
+  Future<String> putAsync(String url, Map<String, dynamic> param,
+      {Map<String, dynamic> headers}) async {
+    try {
+      _options = buildCacheOptions(const Duration(days: 7),
+          maxStale: const Duration(days: 10));
+      if (headers != null) _options.headers.addAll(headers);
+      final String jso = jsonEncode(param);
+      final Response response =
+      await _dio.put(url, data: jso, options: _options);
+      // await _dio.post(url, data: {"product_id": 10, "quantity": 1});
+      if (response.statusCode == 200) {
+        return response.data;
+      } else {
+        return null;
+      }
+    } on DioError catch (e) {
+
+
+      return null;
+    }
+  }
+
 
 
 

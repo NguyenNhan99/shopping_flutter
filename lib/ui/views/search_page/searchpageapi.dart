@@ -1,11 +1,11 @@
-part of 'orderdetailbloc.dart';
+part of 'searchpagebloc.dart';
 
 @protected
-Future<OrderDetailModel> getOrderDetailAPI(int id) async {
+Future<SearchModel> getSearchAPI(String keySearch) async {
   final String url = LocalVariable.instance.urlAPI +
-      '/api/order/detail/$id';
+      '/api/product/search?q=$keySearch&p=1';
   final String json = await HttpRequest.instance.getAsync(url);
   if (json == null) return null;
   final data = jsonDecode(json);
-  return OrderDetailModel.fromJson(data);
+  return SearchModel.fromJson(data);
 }

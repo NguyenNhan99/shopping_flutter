@@ -29,6 +29,7 @@ class Data {
   String avatarUrl;
   int roleId;
   int groupId;
+  String address1;
   String shippingRegionId;
   String phone;
 
@@ -39,6 +40,7 @@ class Data {
         this.avatarUrl,
         this.roleId,
         this.groupId,
+        this.address1,
         this.shippingRegionId,
         this.phone});
 
@@ -49,6 +51,7 @@ class Data {
     avatarUrl = json['avatar_url'];
     roleId = json['role_id'];
     groupId = json['group_id'];
+    address1 = json['address_1'];
     shippingRegionId = json['shipping_region_id'];
     phone = json['phone'];
   }
@@ -61,6 +64,7 @@ class Data {
     data['avatar_url'] = this.avatarUrl;
     data['role_id'] = this.roleId;
     data['group_id'] = this.groupId;
+    data['address_1'] = this.address1;
     data['shipping_region_id'] = this.shippingRegionId;
     data['phone'] = this.phone;
     return data;

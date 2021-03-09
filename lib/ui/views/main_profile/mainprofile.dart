@@ -2,6 +2,7 @@ import 'package:code_demo/core/config/base_bloc.dart';
 import 'package:code_demo/core/models/profilemodel.dart';
 import 'package:code_demo/ui/views/main_profile/mainprofilebloc.dart';
 import 'package:code_demo/ui/views/order_list/orderlist.dart';
+import 'package:code_demo/ui/views/profile_detail/profiledetail.dart';
 import 'package:code_demo/ui/views/wish_list/wishlist.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -41,49 +42,56 @@ class _MainProfileUIState extends State<MainProfileUI> {
                 if (snapshot.hasData) {
                   return Column(
                     children: [
-                      Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(children: [
-                          SizedBox(
-                            width: 40,
-                          ),
-                          Container(
-                            width: 100,
-                            height: 100,
-                            decoration: BoxDecoration(
-                              border: Border.all(color: Colors.black),
-                              borderRadius: BorderRadius.all(Radius.circular(
-                                      50.0) //                 <--- border radius here
+                      GestureDetector(
+                        onTap: (){
+                          Get.toNamed(ProfileDetailUI
+                              .ROUTER_NAME,arguments: {'profile': snapshot.data});
+                        },
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(children: [
+                            SizedBox(
+                              width: 40,
+                            ),
+                            Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                border: Border.all(color: Colors.black),
+                                borderRadius: BorderRadius.all(Radius.circular(
+                                        50.0) //                 <--- border radius here
+                                    ),
+                              ),
+                              child: Icon(
+                                Icons.person_outline_rounded,
+                                size: 100,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    snapshot.data.data.name,
                                   ),
+                                  SizedBox(
+                                    height: 5,
+                                  ),
+                                  Text(snapshot.data.data.email,
+                                      style: TextStyle(color: Colors.grey))
+                                ],
+                              ),
                             ),
-                            child: Icon(
-                              Icons.person_outline_rounded,
-                              size: 100,
+                            Spacer(),
+                            Icon(
+                              Icons.arrow_right,
                             ),
-                          ),
-                          Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Column(
-                              children: [
-                                Text(
-                                  snapshot.data.data.name,
-                                ),
-                                SizedBox(
-                                  height: 5,
-                                ),
-                                Text(snapshot.data.data.email,
-                                    style: TextStyle(color: Colors.grey))
-                              ],
-                            ),
-                          ),
-                          Spacer(),
-                          Icon(
-                            Icons.arrow_right,
-                          ),
-                          SizedBox(
-                            width: 10,
-                          )
-                        ]),
+                            SizedBox(
+                              width: 10,
+                            )
+                          ]),
+                        ),
                       ),
                       Divider(),
                       GestureDetector(

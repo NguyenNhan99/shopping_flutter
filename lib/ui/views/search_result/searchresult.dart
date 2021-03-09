@@ -1,55 +1,52 @@
-import 'package:code_demo/core/config/base_bloc.dart';
 import 'package:code_demo/core/config/local_variable.dart';
-import 'package:code_demo/core/models/homemodel.dart';
-import 'package:code_demo/core/models/productlistmodel.dart';
+import 'package:code_demo/core/models/searchmodel.dart';
 import 'package:code_demo/ui/views/product_detail/productdetail.dart';
-import 'package:code_demo/ui/views/product_list/productlistbloc.dart';
-import 'package:code_demo/ui/views/search_page/searchpage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 
-class ProductListUI extends StatefulWidget {
-  static const String ROUTER_NAME = '/ProductListUI';
+class SearchResultUI extends StatefulWidget {
+  static const String ROUTER_NAME = '/SearchResultUI';
+  const SearchResultUI();
   @override
-  _ProductListUIState createState() => _ProductListUIState();
+  _SearchResultUIState createState() => _SearchResultUIState();
 }
 
-class _ProductListUIState extends State<ProductListUI> {
+class _SearchResultUIState extends State<SearchResultUI> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
-  Categories categories;
   final String url = LocalVariable.instance.urlAPI;
+  SearchModel searchModel;
+  String key;
   String result;
-  ProductListBloc _productListBloc;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    final Map data = Map.from(Get.arguments);
-    categories = data['detailProduct'];
-    _productListBloc = BlocProvider.of<ProductListBloc>(context);
-    _productListBloc.getList(categories.categoryId);
     result = 'Giá giảm dần';
+    final Map data = Map.from(Get.arguments);
+    searchModel = data['searchResult'];
+    key = data['key'];
   }
 
   @override
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
-    final double itemHeight = (size.height - kMinInteractiveDimension - 120) / 2;
+    final double itemHeight =
+        (size.height - kMinInteractiveDimension - 120) / 2;
     final double itemWidth = size.width / 1.6;
     return Scaffold(
       key: _scaffoldKey,
       appBar: AppBar(
         centerTitle: true,
-        title: Text(categories.subCategory[0].name),
+        title: Text(key),
         leading:  IconButton(
             icon: const Icon(Icons.arrow_back_ios_outlined), onPressed: () {Get.back();}),
-        actions: [IconButton(icon: const Icon(Icons.search), onPressed: () {
-          Get.toNamed(SearchPageUI
-              .ROUTER_NAME);
-        })],
+        actions: [
+          IconButton(
+              icon: const Icon(Icons.shopping_cart_outlined), onPressed: () {}),
+        ],
       ),
       endDrawer: Drawer(
         // Add a ListView to the drawer. This ensures the user can scroll
@@ -197,115 +194,95 @@ class _ProductListUIState extends State<ProductListUI> {
           ),
           Divider(),
           Expanded(
-            child: StreamBuilder(
-              stream: _productListBloc.productList.stream,
-              builder: (context, AsyncSnapshot<ProductListModel> snapshot) {
-                switch (snapshot.connectionState) {
-                  case ConnectionState.active:
-                  case ConnectionState.done:
-                    if (snapshot.hasData)
-                      return GridView.builder(
-                        primary: false,
-                        padding: EdgeInsets.zero,
-                        itemCount: snapshot.data.data.products.length,
-                        gridDelegate:
-                        SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,childAspectRatio: (itemWidth / itemHeight)),
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
+            child: GridView.builder(
+              primary: false,
+              padding: EdgeInsets.zero,
+              itemCount: searchModel.data.products.length,
+              gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  childAspectRatio: (itemWidth / itemHeight)),
+              itemBuilder: (BuildContext context, int index) {
+                return Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: GestureDetector(
+                    onTap: () {
+                      print('ấd');
+                      Get.toNamed(ProductDetailUI.ROUTER_NAME, arguments: {
+                        'detailProduct':
+                            searchModel.data.products[index].categoryId
+                      });
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        color: Colors.white,
+                        borderRadius: BorderRadius.circular(10),
+                        boxShadow: [
+                          BoxShadow(
+                              color: Colors.grey,
+                              offset: Offset(0, -1),
+                              blurRadius: 10)
+                        ],
+                      ),
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          (searchModel.data.products[index].isPromotion != 0)
+                              ? Container(
+                                  height: 20,
+                                  width: 70,
+                                  decoration: BoxDecoration(
+                                    color: Colors.red,
+                                    borderRadius: BorderRadius.only(
+                                        bottomRight: Radius.circular(40)),
+                                  ), //             <--- BoxDecoration here
+                                  child: Center(
+                                    child: Text(
+                                      "7%",
+                                      style: TextStyle(
+                                          fontSize: 15.0, color: Colors.white),
+                                    ),
+                                  ),
+                                )
+                              : SizedBox.shrink(),
+                          SizedBox(
+                            height: 5,
+                          ),
+                          Center(
+                            child: Image.network(
+                              '$url${searchModel.data.products[index].image}',
+                              width: 150,
+                              height: 100,
+                              fit: BoxFit.cover,
+                            ),
+                          ),
+                          Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: GestureDetector(
-                              onTap: () {
-                                print('ấd');
-                                Get.toNamed(ProductDetailUI
-                                    .ROUTER_NAME, arguments: {'detailProduct': snapshot.data.data.products[index].categoryId});
-                              },
-                              child: Container(
-
-                                decoration: BoxDecoration(
-                                  color: Colors.white,
-                                  borderRadius: BorderRadius.circular(10),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: Colors.grey,
-                                        offset: Offset(0, -1),
-                                        blurRadius: 10)
-                                  ],
-                                ),
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    (snapshot.data.data.products[index].isPromotion != 0)?Container(
-                                      height: 20,
-                                      width: 70,
-                                      decoration:BoxDecoration(
-                                        color: Colors.red,
-                                        borderRadius: BorderRadius.only( bottomRight: Radius.circular(40)
-                                        ),
-                                      ), //             <--- BoxDecoration here
-                                      child: Center(
-                                        child: Text(
-                                          "7%",
-                                          style: TextStyle(fontSize: 15.0,color: Colors.white),
-                                        ),
-                                      ),
-                                    ):SizedBox.shrink(),
-                                    SizedBox(height: 5,),
-                                    Center(
-                                      child: Image.network(
-                                        '$url${snapshot.data.data.products[index].image}',
-                                        width: 150,
-                                        height: 100,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Text(
-                                        '${snapshot.data.data.products[index].name}',maxLines: 2,
-                                        style: TextStyle(
-                                          color: Colors.grey,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      ),
-                                    ),
-                                    Padding(
-                                      padding: const EdgeInsets.only(left: 8),
-                                      child: Text(
-                                        "${NumberFormat('#,###', "vi_VN").format(snapshot.data.data.products[index].price)}đ",
-                                        style: TextStyle(
-                                          color: Colors.redAccent,
-                                          fontSize: 18,
-                                        ),
-                                      ),
-                                    ),
-
-                                    // Stack(
-                                    //   children: [
-                                    //     Image.network(
-                                    //       'https://trongnv.me/uploads/images/category/w480/1-he-thong-bao-dong-2-XxWZM.jpg',
-                                    //       width: Get.width * 0.5,
-                                    //     ),
-                                    //     SizedBox(
-                                    //       height: 5,
-                                    //     ),
-                                    //   ],
-                                    // ),
-                                  ],
-                                ),
+                            child: Text(
+                              '${searchModel.data.products[index].name}',
+                              maxLines: 2,
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 16,
+                                fontWeight: FontWeight.bold,
                               ),
                             ),
-                          );
-                        },
-                      );
-                    else
-                      return Center(child: Text('Không có sản phẩm này'));
-                    break;
-                  default:
-                    return Container();
-                }
-
-              }
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 8),
+                            child: Text(
+                              "${NumberFormat('#,###', "vi_VN").format(searchModel.data.products[index].price)}đ",
+                              style: TextStyle(
+                                color: Colors.redAccent,
+                                fontSize: 18,
+                              ),
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                );
+              },
             ),
           ),
         ],
@@ -362,7 +339,7 @@ class _ProductListUIState extends State<ProductListUI> {
                 ),
                 Divider(),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.back(result: 'Giá giảm dần');
                   },
                   child: Padding(
@@ -384,7 +361,7 @@ class _ProductListUIState extends State<ProductListUI> {
                 ),
                 const Divider(),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.back(result: 'Giá tăng dần');
                   },
                   child: Padding(
@@ -406,7 +383,7 @@ class _ProductListUIState extends State<ProductListUI> {
                 ),
                 const Divider(),
                 GestureDetector(
-                  onTap: (){
+                  onTap: () {
                     Get.back(result: 'Sản phẩm mới');
                   },
                   child: Padding(

@@ -14,6 +14,11 @@ import 'package:code_demo/ui/views/product_detail/productdetail.dart';
 import 'package:code_demo/ui/views/product_detail/productdetailbloc.dart';
 import 'package:code_demo/ui/views/product_list/productlist.dart';
 import 'package:code_demo/ui/views/product_list/productlistbloc.dart';
+import 'package:code_demo/ui/views/profile_detail/profiledetail.dart';
+import 'package:code_demo/ui/views/profile_detail/profiledetailbloc.dart';
+import 'package:code_demo/ui/views/search_page/searchpage.dart';
+import 'package:code_demo/ui/views/search_page/searchpagebloc.dart';
+import 'package:code_demo/ui/views/search_result/searchresult.dart';
 import 'package:code_demo/ui/views/wish_list/wishlist.dart';
 import 'package:code_demo/ui/views/wish_list/wishlistbloc.dart';
 import 'package:get/get_navigation/src/routes/get_route.dart';
@@ -48,6 +53,13 @@ class RouterManager {
       GetPage(
           name: OrderDetailUI.ROUTER_NAME,
           page: () => BlocProvider(bloc: OrderDetailBloc(), child: OrderDetailUI())),
+      GetPage(
+          name: SearchPageUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: SearchPageBloc(), child: SearchPageUI())),
+      GetPage(name: SearchResultUI.ROUTER_NAME, page: () => const SearchResultUI()),
+      GetPage(
+          name: ProfileDetailUI.ROUTER_NAME,
+          page: () => BlocProvider(bloc: ProfileDetailBloc(), child: ProfileDetailUI())),
 
     ];
 
